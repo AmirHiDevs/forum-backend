@@ -45,6 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public function threads(): HasMany
     {
         return $this->hasMany(Thread::class);
