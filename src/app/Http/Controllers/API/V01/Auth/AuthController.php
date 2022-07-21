@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -33,7 +34,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'user registered successfully.'
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**

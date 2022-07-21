@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\ChannelRepository;
+use Illuminate\Http\Response;
 
 class ChannelController extends Controller
 {
@@ -20,7 +21,8 @@ class ChannelController extends Controller
 
     public function getAllChannels()
     {
-        return response()->json(Channel::all());
+        $channels = $this->channelRepo->getAll();
+        return response()->json($channels,Response::HTTP_OK);
     }
 
     public function createNewChannel(Request $request): JsonResponse
@@ -34,6 +36,19 @@ class ChannelController extends Controller
 
         return response()->json([
             'message' => 'Channel Created successfully.'
-        ], 201);
+        ], Response::HTTP_CREATED);
+    }
+
+    public function updateChannel(Request $request)
+    {
+        $request->validate([
+            'name' => ['required'],
+        ]);
+
+        $this->channelRepo->update($request->id,$request->name);
+
+        return response()->json([
+            'message' => 'Channel Updated successfully.'
+        ], Response::HTTP_OK);
     }
 }

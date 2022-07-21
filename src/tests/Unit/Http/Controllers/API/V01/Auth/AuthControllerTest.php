@@ -5,6 +5,7 @@ namespace Tests\Unit\Http\Controllers\API\V01\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -18,21 +19,21 @@ class AuthControllerTest extends TestCase
     {
         $response = $this->postJson(route('login'));
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function test_user_can_register()
     {
         $response = $this->registerNewUser();
 
-        $response->assertStatus(201);
+        $response->assertStatus(Response::HTTP_CREATED);
     }
 
     public function test_user_should_have_valid_register()
     {
         $response = $this->postJson(route('register'));
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function test_user_can_login_by_email()
@@ -42,7 +43,7 @@ class AuthControllerTest extends TestCase
             'email' => $user->email,
             'password' => 'password'
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     public function test_logged_in_user_can_logout()
@@ -50,7 +51,7 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create();
         $response = $this->actingAs($user)->postJson(route('logout'));
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     public function test_logged_in_user_can_see_his_info()
@@ -58,7 +59,7 @@ class AuthControllerTest extends TestCase
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get(route('user.info'));
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
     //common functions
     public function registerNewUser(): TestResponse
