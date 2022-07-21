@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\API\V01\Auth\AuthController;
+use App\Http\Controllers\API\V01\Channel\ChannelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,11 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', 'login')->name('login');
         Route::post('/logout', 'logout')->name('logout');
         Route::get('/user/info', 'userInfo')->name('user.info');
+    });
+
+    Route::prefix('channel')->controller(ChannelController::class)->group(function (){
+        Route::get('/all','getAllChannels')->name('channel.all');
+        Route::post('/create','createNewChannel')->name('channel.create');
     });
 });
 
