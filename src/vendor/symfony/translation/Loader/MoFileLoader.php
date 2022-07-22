@@ -50,7 +50,7 @@ class MoFileLoader extends FileLoader
         if ($stat['size'] < self::MO_HEADER_SIZE) {
             throw new InvalidResourceException('MO stream content has an invalid format.');
         }
-        $magic = unpack('V1', fread($stream, 4));
+        $magic = unpack('v1', fread($stream, 4));
         $magic = hexdec(substr(dechex(current($magic)), -8));
 
         if (self::MO_LITTLE_ENDIAN_MAGIC == $magic) {
@@ -132,7 +132,7 @@ class MoFileLoader extends FileLoader
      */
     private function readLong($stream, bool $isBigEndian): int
     {
-        $result = unpack($isBigEndian ? 'N1' : 'V1', fread($stream, 4));
+        $result = unpack($isBigEndian ? 'N1' : 'v1', fread($stream, 4));
         $result = current($result);
 
         return (int) substr($result, -8);

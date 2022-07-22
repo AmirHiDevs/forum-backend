@@ -1,6 +1,7 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\API\V01\Auth;
+namespace Tests\Unit\API\v1\Auth;
+
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,12 +9,13 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
+use function route;
 
 
-class AuthControllerTest extends TestCase
+class AuthTest extends TestCase
 {
     use RefreshDatabase;
-    use WithFaker;
+    protected $seed = true;
 
     public function test_user_should_have_valid_login()
     {
@@ -39,6 +41,7 @@ class AuthControllerTest extends TestCase
     public function test_user_can_login_by_email()
     {
         $user = User::factory()->create();
+
         $response = $this->postJson(route('login'), [
             'email' => $user->email,
             'password' => 'password'

@@ -1,8 +1,8 @@
 <?php
 
 
-use App\Http\Controllers\API\V01\Auth\AuthController;
-use App\Http\Controllers\API\V01\Channel\ChannelController;
+use App\Http\Controllers\API\v1\Auth\AuthController;
+use App\Http\Controllers\API\v1\Channel\ChannelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +26,10 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('channel')->controller(ChannelController::class)->group(function (){
-        Route::get('/all','getAllChannels')->name('channel.all');
-        Route::post('/create','createNewChannel')->name('channel.create');
+        Route::get('/all','getChannel')->name('channel.all');
+        Route::post('/create','createChannel')->name('channel.create');
         Route::put('/update','updateChannel')->name('channel.update');
+        Route::delete('/delete','deleteChannel')->name('channel.delete');
     });
 });
 

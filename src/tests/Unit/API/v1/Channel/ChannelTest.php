@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\API\V01\Channel;
+namespace Tests\Unit\API\v1\Channel;
 
 
 use App\Models\Channel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
-use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
+use function route;
 
-class ChannelControllerTest extends TestCase
+class ChannelTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
@@ -38,7 +38,7 @@ class ChannelControllerTest extends TestCase
         $response->assertStatus(Response::HTTP_CREATED);
     }
 
-    public function test_updated_channel_should_be_validated()
+    public function test_updating_channel_should_be_validated()
     {
         $response = $this->Json('PUT',route('channel.update'));
 
@@ -58,5 +58,23 @@ class ChannelControllerTest extends TestCase
         $updatedChannel = Channel::find($channel->id);
         $response->assertStatus(Response::HTTP_OK);
         $this->assertEquals('Vue.js',$updatedChannel->name);
+    }
+
+    public function test_deleting_channel_should_be_validated()
+    {
+        $response = $this->Json('DELETE',route('channel.delete'));
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function test_channel_can_be_delete()
+    {
+        $channel = Channel::factory()->create();
+
+        $response = $this->Json('DELETE',route('channel.delete'),[
+            'id'=> $channel->id
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK);
     }
 }
