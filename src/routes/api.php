@@ -25,11 +25,13 @@ Route::prefix('v1')->group(function () {
         Route::get('/user/info', 'userInfo')->name('user.info');
     });
 
-    Route::prefix('channel')->controller(ChannelController::class)->group(function (){
-        Route::get('/all','getChannel')->name('channel.all');
-        Route::post('/create','createChannel')->name('channel.create');
-        Route::put('/update','updateChannel')->name('channel.update');
-        Route::delete('/delete','deleteChannel')->name('channel.delete');
+    Route::prefix('channel')->controller(ChannelController::class)->group(function () {
+        Route::get('/all', 'getChannel')->name('channel.all');
+        Route::group(['middleware' => ['permission:Manage_Channels']], function () {
+            Route::post('/create', 'createChannel')->name('channel.create');
+            Route::put('/update', 'updateChannel')->name('channel.update');
+            Route::delete('/delete', 'deleteChannel')->name('channel.delete');
+        });
     });
 });
 
