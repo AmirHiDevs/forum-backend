@@ -63,7 +63,7 @@ class ChannelTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user);
         $user->givePermissionTo('Manage_Channels');
-        $response = $this->Json('PUT',route('channel.update',[
+        $response = $this->putJson(route('channel.update',[
             'id'=> $channel->id,
             'name'=> 'Vue.js'
         ]));

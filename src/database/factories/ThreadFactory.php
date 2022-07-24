@@ -28,7 +28,7 @@ class ThreadFactory extends Factory
         return [
             'title' => $title,
             'slug' => Str::slug($title),
-            'content'=> $this->faker->realText,
+            'contents'=> $this->faker->realText,
             'user_id'=> User::factory()->create()->id,
             'channel_id'=> Channel::factory()->create()->id,
         ];

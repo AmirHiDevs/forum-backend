@@ -30,7 +30,7 @@ class AuthController extends Controller
         $user->email === $defaultSuperAdminEmail ? $user->assignRole('Super_Admin') : $user->assignRole('User');
 
         return response()->json([
-            'message' => 'user registered successfully.'
+            'message' => 'User is registered successfully.'
         ], Response::HTTP_CREATED);
     }
 
@@ -57,7 +57,7 @@ class AuthController extends Controller
         Auth::logout();
 
         return response()->json([
-            'message' => 'logged out successfully'
+            'message' => 'Logged out successfully'
         ]);
     }
 

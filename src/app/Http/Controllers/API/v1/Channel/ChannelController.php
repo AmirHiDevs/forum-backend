@@ -31,7 +31,7 @@ class ChannelController extends Controller
         $this->channelRepo->create($request->name);
 
         return response()->json([
-            'message' => 'Channel Created Successfully.'
+            'message' => 'Channel is Created Successfully.'
         ], Response::HTTP_CREATED);
     }
 
@@ -40,7 +40,7 @@ class ChannelController extends Controller
         $this->channelRepo->update($request->id,$request->name);
 
         return response()->json([
-            'message' => 'Channel Updated Successfully.'
+            'message' => 'Channel is Updated Successfully.'
         ], Response::HTTP_OK);
     }
 
@@ -49,7 +49,7 @@ class ChannelController extends Controller
         $this->channelRepo->delete($request->id);
 
         return response()->json([
-            'message' => 'Channel Deleted Successfully.'
+            'message' => 'Channel is Deleted Successfully.'
         ], Response::HTTP_OK);
     }
 }

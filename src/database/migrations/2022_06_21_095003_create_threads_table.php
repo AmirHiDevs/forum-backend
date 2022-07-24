@@ -17,7 +17,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->text('content');
+            $table->text('contents');
             $table->boolean('flag')->default(1);
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
