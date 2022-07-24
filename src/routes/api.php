@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
+use App\Http\Controllers\API\v1\Thread\ThreadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('v1')->group(function () {
+
+    //AUTH ROUTES
     Route::prefix('/auth')->controller(AuthController::class)->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
@@ -25,13 +28,27 @@ Route::prefix('v1')->group(function () {
         Route::get('/user/info', 'userInfo')->name('user.info');
     });
 
+
+    //CHANNEL ROUTES
     Route::prefix('channel')->controller(ChannelController::class)->group(function () {
         Route::get('/all', 'getChannel')->name('channel.all');
-        Route::group(['middleware' => ['permission:Manage_Channels']], function () {
+        Route::group(['middleware' => ['permission:Manage_Channels','auth:sanctum']], function () {
             Route::post('/create', 'createChannel')->name('channel.create');
             Route::put('/update', 'updateChannel')->name('channel.update');
             Route::delete('/delete', 'deleteChannel')->name('channel.delete');
         });
     });
+
+
+
+    //THREAD ROUTES
+    Route::resource('threads',ThreadController::class);
+//    Route::prefix('thread')->controller(ThreadController::class)->group(function () {
+//      Route::get('/index','index')->name('threads.index');
+//      Route::get('/show/{slug}','show')->name('threads.show');
+//    });
+
+
+
 });
 
