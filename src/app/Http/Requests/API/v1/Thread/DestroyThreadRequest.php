@@ -7,10 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * @property mixed $id
  */
-class UpdateThreadRequest extends FormRequest
+class DestroyThreadRequest extends FormRequest
 {
-
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,12 +27,7 @@ class UpdateThreadRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> 'required',
-            'user_id' => 'sometimes',
-            'title' => 'required',
-            'contents'=> 'required',
-            'channel_id'=> 'required',
-            'best_answer_id' => 'nullable'
+            'id' => 'required',
         ];
     }
 }

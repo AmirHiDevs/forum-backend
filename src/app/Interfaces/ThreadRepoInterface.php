@@ -15,5 +15,9 @@ interface ThreadRepoInterface
 
     public function store($title, $contents): Model;
 
-    public function update($id,$title, $contents): bool;
+    public function update($id,$title, $contents,$best_answer_id = null): bool;
+
+    public function destroy($id): bool;
+
+    public function user($id): Model;
 }

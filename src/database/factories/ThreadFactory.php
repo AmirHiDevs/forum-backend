@@ -31,6 +31,7 @@ class ThreadFactory extends Factory
             'contents'=> $this->faker->realText,
             'user_id'=> User::factory()->create()->id,
             'channel_id'=> Channel::factory()->create()->id,
+            'best_answer_id' => $this->faker->randomNumber(100 || null)
         ];
     }
 }
