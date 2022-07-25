@@ -30,7 +30,6 @@ class UpdateThreadRequest extends FormRequest
     {
         return [
             'id'=> 'required',
-            'user_id' => 'sometimes',
             'title' => 'required',
             'contents'=> 'required',
             'channel_id'=> 'required',

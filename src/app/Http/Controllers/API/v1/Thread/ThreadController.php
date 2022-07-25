@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\Thread\DestroyThreadRequest;
 use App\Http\Requests\API\v1\Thread\StoreThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
-use App\Models\Thread;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -48,7 +47,7 @@ class ThreadController extends Controller
     public function update(UpdateThreadRequest $request): JsonResponse
     {
 
-        if (Gate::forUser(Auth::user())->allows('manage-thread',$this->threadRepo->user($request->user_id))) {
+        if (Gate::forUser(Auth::user())->allows('manage-thread',$this->threadRepo->user($request->id))) {
             $this->threadRepo->update(
                 $request->id,
                 $request->input('title'),
@@ -70,7 +69,7 @@ class ThreadController extends Controller
 
     public function destroy(DestroyThreadRequest $request): JsonResponse
     {
-        if (Gate::forUser(auth()->user())->allows('manage-thread', Thread::query()->find($request->user_id))) {
+        if (Gate::forUser(auth()->user())->allows('manage-thread', $this->threadRepo->user($request->id))) {
             $this->threadRepo->destroy($request->id);
 
             return response()->json([
