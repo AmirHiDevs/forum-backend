@@ -17,7 +17,8 @@ class Thread extends Model
         'slug',
         'contents',
         'channel_id',
-        'user_id'
+        'user_id',
+        'best_answer_id'
     ];
 
     public function channel(): BelongsTo

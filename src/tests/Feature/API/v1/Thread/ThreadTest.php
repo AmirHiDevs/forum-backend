@@ -43,7 +43,7 @@ class ThreadTest extends TestCase
         Sanctum::actingAs($user);
 
 
-        $response = $this->postJson(route('threads.store',[
+        $response = $this->postJson(route('threads.store', [
             'title' => 'Foo',
             'contents' => 'Bar',
             'channel_id' => Channel::factory()->create()->id,
@@ -55,7 +55,7 @@ class ThreadTest extends TestCase
     public function test_updating_thread_should_be_validated()
     {
         $thread = Thread::factory()->create();
-        $response = $this->putJson(route('threads.update',$thread->id));
+        $response = $this->putJson(route('threads.update', $thread->id));
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -71,16 +71,37 @@ class ThreadTest extends TestCase
             'title' => 'John',
             'contents' => 'Doe',
             'channel_id' => 1,
+            'best_answer_id' => 2,
+            'user_id' => $user->id,
         ]);
 
-        $response = $this->putJson(route('threads.update',$thread->id),[
-            'id'=>$thread->id,
+        $this->putJson(route('threads.update', $thread->id), [
+            'id' => $thread->id,
+            'user_id' => $user->id,
             'title' => 'Foo',
             'contents' => 'Bar',
             'channel_id' => 2,
+            'best_answer_id' => 4
         ])->assertSuccessful();
 
         $thread->refresh();
-        $this->assertSame('Foo',$thread->title);
+        $this->assertSame('Foo', $thread->title);
+        $this->assertSame(4, $thread->best_answer_id);
+    }
+
+    public function test_thread_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $thread = Thread::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $this->deleteJson(route('threads.destroy', $thread->id), [
+            'id' => $thread->id,
+            'user_id' => $user->id,
+        ])->assertSuccessful();
     }
 }

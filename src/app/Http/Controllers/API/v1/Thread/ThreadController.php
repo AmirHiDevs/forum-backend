@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API\v1\Thread;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\v1\Thread\DestroyThreadRequest;
 use App\Http\Requests\API\v1\Thread\StoreThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
+use App\Models\Thread;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ThreadController extends Controller
 {
@@ -43,11 +47,39 @@ class ThreadController extends Controller
 
     public function update(UpdateThreadRequest $request): JsonResponse
     {
-        $this->threadRepo->update($request->id, $request->input('title'), $request->input('contents'));
+
+        if (Gate::forUser(Auth::user())->allows('manage-thread',$this->threadRepo->user($request->user_id))) {
+            $this->threadRepo->update(
+                $request->id,
+                $request->input('title'),
+                $request->input('contents'),
+                $request->input('best_answer_id')
+            );
+
+            return response()->json([
+                'message' => 'Thread is updated Successfully.'
+            ], Response::HTTP_OK);
+        }
 
         return response()->json([
-           'message' => 'Thread is updated Successfully.'
-        ],Response::HTTP_OK);
+            'message' => 'Access Denied.'
+        ], Response::HTTP_FORBIDDEN);
 
+
+    }
+
+    public function destroy(DestroyThreadRequest $request): JsonResponse
+    {
+        if (Gate::forUser(auth()->user())->allows('manage-thread', Thread::query()->find($request->user_id))) {
+            $this->threadRepo->destroy($request->id);
+
+            return response()->json([
+                'message' => 'Thread is deleted Successfully.'
+            ], Response::HTTP_OK);
+        }
+
+        return response()->json([
+            'message' => 'Access Denied.'
+        ], Response::HTTP_FORBIDDEN);
     }
 }
