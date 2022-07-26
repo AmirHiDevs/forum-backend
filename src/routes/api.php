@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\API\v1\Answer\AnswerController;
 use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
 use App\Http\Controllers\API\v1\Thread\ThreadController;
@@ -43,10 +44,11 @@ Route::prefix('v1')->group(function () {
 
     //THREAD ROUTES
     Route::resource('threads',ThreadController::class);
-//    Route::prefix('thread')->controller(ThreadController::class)->group(function () {
-//      Route::get('/index','index')->name('threads.index');
-//      Route::get('/show/{slug}','show')->name('threads.show');
-//    });
+
+    //ANSWER ROUTES
+    Route::prefix('threads')->resource('answers', AnswerController::class);
+
+
 
 
 
