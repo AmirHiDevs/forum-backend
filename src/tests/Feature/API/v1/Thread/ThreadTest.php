@@ -62,7 +62,7 @@ class ThreadTest extends TestCase
 
     public function test_thread_should_be_updated()
     {
-        $this->withoutExceptionHandling();
+
         $user = User::factory()->create();
         Sanctum::actingAs($user);
 
@@ -91,7 +91,6 @@ class ThreadTest extends TestCase
 
     public function test_thread_can_be_deleted()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
         Sanctum::actingAs($user);
 

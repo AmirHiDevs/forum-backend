@@ -8,9 +8,10 @@ use App\Http\Requests\API\v1\Thread\StoreThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ThreadController extends Controller
 {

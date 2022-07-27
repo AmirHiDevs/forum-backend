@@ -6,15 +6,15 @@ namespace Tests\Feature\API\v1\Channel;
 use App\Models\Channel;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response;
 use Laravel\Sanctum\Sanctum;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use function route;
 
 class ChannelTest extends TestCase
 {
     use RefreshDatabase;
-    protected $seed = true;
+    protected bool $seed = true;
 
     public function test_all_channels_should_be_accessible()
     {

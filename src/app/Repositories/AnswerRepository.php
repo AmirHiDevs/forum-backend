@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+
 
 class AnswerRepository implements AnswerRepoInterface
 {
@@ -32,5 +32,17 @@ class AnswerRepository implements AnswerRepoInterface
             'thread_id' => Thread::query()->find($thread_id)->isRelation('answers'),
             'user_id' => Auth::id(),
         ]);
+    }
+
+    public function update($id,$contents): bool
+    {
+        return $this->model->find($id)->update([
+            'contents' => $contents,
+        ]);
+    }
+
+    public function destroy($id): bool
+    {
+        return $this->model->find($id)->delete();
     }
 }
