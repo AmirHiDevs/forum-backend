@@ -4,6 +4,9 @@ namespace App\Http\Requests\API\v1\Answer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property mixed $thread_id
+ */
 class StoreAnswerRequest extends FormRequest
 {
     /**

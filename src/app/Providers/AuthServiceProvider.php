@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Answer;
 use App\Models\Thread;
 use App\Models\User;
 use App\Repositories\ThreadRepository;
@@ -34,6 +35,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('manage-thread', function (User $user,Thread $thread) {
             return $user->id == $thread->user_id;
+        });
+
+        Gate::define('manage-answer', function (User $user,Answer $answer) {
+            return $user->id == $answer->user_id;
         });
     }
 }

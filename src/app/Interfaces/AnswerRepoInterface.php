@@ -15,5 +15,5 @@ interface AnswerRepoInterface
 
     public function destroy($id): bool;
 
-//    public function user($id): Model;
+    public function user($id): Model;
 }

@@ -9,6 +9,8 @@ use App\Http\Requests\API\v1\Answer\UpdateAnswerRequest;
 use App\Http\Requests\API\v1\Channel\DeleteChannelRequest;
 use App\Repositories\AnswerRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class AnswerController extends Controller
@@ -37,19 +39,35 @@ class AnswerController extends Controller
 
     public function update(UpdateAnswerRequest $request): JsonResponse
     {
-        $this->answerRepo->update($request->id,$request->input('contents'));
+        if (Gate::forUser(Auth::user())->allows('manage-answer', $this->answerRepo->user($request->id))) {
+
+            $this->answerRepo->update($request->id, $request->input('contents'));
+
+            return response()->json([
+                'message' => 'Answer is updated Successfully.'
+            ], Response::HTTP_OK);
+        }
 
         return response()->json([
-            'message' => 'Answer is updated Successfully.'
-        ], Response::HTTP_OK);
+            'message' => 'Access Denied.'
+        ], Response::HTTP_FORBIDDEN);
+
     }
 
     public function destroy(DestroyAnswerRequest $request): JsonResponse
     {
-        $this->answerRepo->destroy($request->id);
+        if (Gate::forUser(Auth::user())->allows('manage-answer', $this->answerRepo->user($request->id))) {
+
+            $this->answerRepo->destroy($request->id);
+
+            return response()->json([
+                'message' => 'Answer is deleted Successfully.'
+            ], Response::HTTP_OK);
+        }
 
         return response()->json([
-            'message' => 'Answer is deleted Successfully.'
-        ], Response::HTTP_OK);
+            'message' => 'Access Denied.'
+        ], Response::HTTP_FORBIDDEN);
+
     }
 }
