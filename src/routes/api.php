@@ -4,6 +4,7 @@
 use App\Http\Controllers\API\v1\Answer\AnswerController;
 use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
+use App\Http\Controllers\API\v1\Subscribe\SubscribeController;
 use App\Http\Controllers\API\v1\Thread\ThreadController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,8 @@ Route::prefix('v1')->group(function () {
     //ANSWER ROUTES
     Route::prefix('threads')->resource('answers', AnswerController::class);
 
+    //SUBSCRIBE ROUTES
+    Route::prefix('threads')->resource('subscribes', SubscribeController::class);
 
 
 

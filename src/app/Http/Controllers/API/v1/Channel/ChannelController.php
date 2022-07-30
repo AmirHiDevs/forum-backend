@@ -8,7 +8,8 @@ use App\Http\Requests\API\v1\Channel\UpdateChannelRequest;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Repositories\ChannelRepository;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class ChannelController extends Controller
 {

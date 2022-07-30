@@ -10,6 +10,11 @@ class Subscribe extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'thread_id',
+        'user_id'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
