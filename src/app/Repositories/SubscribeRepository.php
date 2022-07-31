@@ -36,7 +36,7 @@ class SubscribeRepository implements SubscribeRepoInterface
         ])->delete();
     }
 
-    public function notifiableUser($thread_id)
+    public function notifiableUser($thread_id) : array
     {
         return $this->model->Where('thread_id',$thread_id)->Pluck('user_id')->all();
     }

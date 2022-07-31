@@ -116,7 +116,6 @@ class AnswerTest extends TestCase
             ->exists();
 
         $this->assertFalse($response);
-
     }
 
 

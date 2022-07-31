@@ -6,6 +6,7 @@ use App\Http\Controllers\API\v1\Auth\AuthController;
 use App\Http\Controllers\API\v1\Channel\ChannelController;
 use App\Http\Controllers\API\v1\Subscribe\SubscribeController;
 use App\Http\Controllers\API\v1\Thread\ThreadController;
+use App\Http\Controllers\API\v1\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,10 @@ Route::prefix('v1')->group(function () {
         Route::get('/user/info', 'userInfo')->name('user.info');
     });
 
+    //USER ROUTES
+    Route::prefix('users')->controller(UserController::class)->group(function(){
+        Route::get('/leaderboards','leaderboard')->name('leaderboard');
+    });
 
     //CHANNEL ROUTES
     Route::prefix('channel')->controller(ChannelController::class)->group(function () {

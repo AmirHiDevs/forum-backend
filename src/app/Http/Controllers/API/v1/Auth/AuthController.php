@@ -7,13 +7,13 @@ use App\Http\Requests\API\v1\Auth\LoginRequest;
 use App\Http\Requests\API\v1\Auth\RegisterRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    private $userRepo;
+    protected UserRepository $userRepo;
 
     public function __construct(UserRepository $userRepo)
     {
@@ -49,7 +49,11 @@ class AuthController extends Controller
 
     public function userInfo(): JsonResponse
     {
-        return response()->json(Auth::user());
+        $data = [
+          Auth::user(),
+          'notifications' => Auth::user()->unreadNotifications()
+        ];
+        return response()->json($data, Response::HTTP_OK);
     }
 
     public function logout(): JsonResponse

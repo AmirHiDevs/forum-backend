@@ -4,13 +4,16 @@ namespace App\Repositories;
 
 use App\Interfaces\UserRepoInterface;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @property Builder $model
+ * @property EloquentBuilder $model
  */
 class UserRepository implements UserRepoInterface
 {
@@ -32,5 +35,15 @@ class UserRepository implements UserRepoInterface
     public function find($id): Collection
     {
         return $this->model->getModel()->find($id);
+    }
+
+    public function userNotifications(): QueryBuilder
+    {
+        return Auth::user()->unreadNotifications();
+    }
+
+    public function leaderboard(): LengthAwarePaginator
+    {
+        return $this->model->OrderByDesc('score')->paginate(15);
     }
 }

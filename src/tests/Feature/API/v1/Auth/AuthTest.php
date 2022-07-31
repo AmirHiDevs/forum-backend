@@ -5,8 +5,9 @@ namespace Tests\Feature\API\v1\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response;
+
 use Illuminate\Testing\TestResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use function route;
 
@@ -14,7 +15,7 @@ use function route;
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
-    protected $seed = true;
+    protected bool $seed = true;
 
     public function test_user_should_have_valid_login()
     {
@@ -63,6 +64,8 @@ class AuthTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
     }
+
+
     //common functions
     public function registerNewUser(): TestResponse
     {

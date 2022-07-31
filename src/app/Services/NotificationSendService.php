@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Collection;
 class NotificationSendService
 {
 
-    protected $threadRepo;
-    protected $userRepo;
-    protected $subscribeRepo;
+    protected ThreadRepository $threadRepo;
+    protected UserRepository $userRepo;
+    protected SubscribeRepository $subscribeRepo;
 
     public function __construct(SubscribeRepository $subscribeRepo, ThreadRepository $threadRepo, UserRepository $userRepo)
     {
