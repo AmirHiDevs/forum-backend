@@ -50,4 +50,11 @@ class AnswerRepository implements AnswerRepoInterface
     {
         return $this->model->find($id);
     }
+
+    public function score($thread_id,$amount)
+    {
+        if (Thread::with('answers')->find($thread_id)->user_id !== Auth::id()){
+           Auth::user()->Increment('score',$amount);
+        }
+    }
 }

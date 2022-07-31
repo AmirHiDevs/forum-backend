@@ -46,6 +46,21 @@ class AnswerTest extends TestCase
         $response->assertStatus(Response::HTTP_CREATED);
     }
 
+    public function test_user_score_should_be_increased_after_submit_new_answer()
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+
+        $response = $this->postJson(route('answers.store', [
+            'contents' => 'Bar',
+            'thread_id' => Thread::factory()->create()->id,
+        ]));
+
+        $response->assertStatus(Response::HTTP_CREATED);
+        $user->refresh();
+        $this->assertEquals(10,$user->score);
+    }
+
     public function test_updating_answer_should_be_validated()
     {
         $answer = Answer::factory()->create();
@@ -97,7 +112,7 @@ class AnswerTest extends TestCase
 
         $response = Thread::with('answers')
             ->find($answer->thread_id)
-            ->where('contents',$answer->contents)
+            ->Where('contents',$answer->contents)
             ->exists();
 
         $this->assertFalse($response);

@@ -39,6 +39,7 @@ class AnswerController extends Controller
             $sendService->notifyUserForNewReply($request->thread_id)
         );
 
+        $this->answerRepo->score($request->input('thread_id'),10);
 
         return response()->json([
             'message' => 'Answer is successfully created'
