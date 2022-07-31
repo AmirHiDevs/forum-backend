@@ -3,6 +3,9 @@
 namespace App\Interfaces;
 
 
+use App\Models\Thread;
+use App\Notifications\NewReplySubmitted;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +21,8 @@ interface ThreadRepoInterface
     public function update($id,$title, $contents,$best_answer_id = null): bool;
 
     public function destroy($id): bool;
+
+    public function find($thread_id);
 
     public function user($id): Model;
 }

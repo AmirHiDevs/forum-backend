@@ -30,9 +30,14 @@ class SubscribeRepository implements SubscribeRepoInterface
 
     public function destroy($id,$thread_id): bool
     {
-        return $this->model->find($id)->where([
+        return $this->model->find($id)->Where([
             ["thread_id", $thread_id],
             ['user_id',Auth::id()]
         ])->delete();
+    }
+
+    public function notifiableUser($thread_id)
+    {
+        return $this->model->Where('thread_id',$thread_id)->Pluck('user_id')->all();
     }
 }

@@ -8,9 +8,11 @@ use App\Http\Requests\API\v1\Answer\StoreAnswerRequest;
 use App\Http\Requests\API\v1\Answer\UpdateAnswerRequest;
 use App\Http\Requests\API\v1\Channel\DeleteChannelRequest;
 use App\Repositories\AnswerRepository;
+use App\Services\NotificationSendService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
 
 class AnswerController extends Controller
@@ -28,9 +30,15 @@ class AnswerController extends Controller
         $this->answerRepo->index();
     }
 
-    public function store(StoreAnswerRequest $request): JsonResponse
+    public function store(StoreAnswerRequest $request,NotificationSendService $sendService): JsonResponse
     {
         $this->answerRepo->store($request->thread_id, $request->input('contents'));
+
+        Notification::send(
+            $sendService->getUserInstance($request->thread_id),
+            $sendService->notifyUserForNewReply($request->thread_id)
+        );
+
 
         return response()->json([
             'message' => 'Answer is successfully created'

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\ThreadRepoInterface;
 use App\Models\Channel;
 use App\Models\Thread;
+use App\Notifications\NewReplySubmitted;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -43,7 +44,7 @@ class ThreadRepository implements ThreadRepoInterface
         ]);
     }
 
-    public function update($id,$title, $contents,$best_answer_id = null): bool
+    public function update($id, $title, $contents, $best_answer_id = null): bool
     {
 
         return $this->model->find($id)->update([
@@ -57,11 +58,20 @@ class ThreadRepository implements ThreadRepoInterface
 
     public function destroy($id): bool
     {
-       return $this->model->find($id)->delete();
+        return $this->model->find($id)->delete();
     }
 
-    public function user($id) : Model
+
+    public function find($thread_id)
+    {
+       return $this->model->getModel()->find($thread_id);
+    }
+
+
+    public function user($id): Model
     {
         return $this->model->find($id);
     }
+
+
 }

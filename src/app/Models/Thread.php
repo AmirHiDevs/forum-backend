@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
+
 class Thread extends Model
 {
     use HasFactory;
@@ -20,6 +21,7 @@ class Thread extends Model
         'user_id',
         'best_answer_id'
     ];
+
 
     public function channel(): BelongsTo
     {
