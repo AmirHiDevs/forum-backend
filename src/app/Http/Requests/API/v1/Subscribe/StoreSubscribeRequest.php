@@ -2,19 +2,21 @@
 
 namespace App\Http\Requests\API\v1\Subscribe;
 
+use App\Repositories\UserRepository;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class StoreSubscribeRequest extends FormRequest
 {
-    /**
+   /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return true;
+        return (new UserRepository())->isBlock();
     }
 
     /**

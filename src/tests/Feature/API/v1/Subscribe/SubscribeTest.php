@@ -21,6 +21,8 @@ class SubscribeTest extends TestCase
 
     public function test_store_subscription_should_be_validated()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
         $response = $this->postJson(route('subscribes.store'));
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);

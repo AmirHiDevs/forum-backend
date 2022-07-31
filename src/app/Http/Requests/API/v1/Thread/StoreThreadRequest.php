@@ -2,18 +2,20 @@
 
 namespace App\Http\Requests\API\v1\Thread;
 
+use App\Repositories\UserRepository;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 
 class StoreThreadRequest extends FormRequest
 {
-    /**
+   /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return true;
+        return (new UserRepository())->isBlock();
     }
 
     /**

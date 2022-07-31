@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\UserRepoInterface;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,5 +46,10 @@ class UserRepository implements UserRepoInterface
     public function leaderboard(): LengthAwarePaginator
     {
         return $this->model->OrderByDesc('score')->paginate(15);
+    }
+
+    public function isBlock() : bool
+    {
+        return (bool) Auth::user()->query()->Where('is_block',false);
     }
 }

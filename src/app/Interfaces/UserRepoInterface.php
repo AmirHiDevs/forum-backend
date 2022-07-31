@@ -18,4 +18,6 @@ interface UserRepoInterface
     public function userNotifications(): QueryBuilder;
 
     public function leaderboard(): LengthAwarePaginator;
+
+    public function isBlock() : bool;
 }

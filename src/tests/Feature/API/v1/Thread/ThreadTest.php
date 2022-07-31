@@ -32,6 +32,8 @@ class ThreadTest extends TestCase
 
     public function test_creating_thread_should_be_validated()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
         $response = $this->postJson(route('threads.store'));
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -54,6 +56,8 @@ class ThreadTest extends TestCase
 
     public function test_updating_thread_should_be_validated()
     {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
         $thread = Thread::factory()->create();
         $response = $this->putJson(route('threads.update', $thread->id));
 
