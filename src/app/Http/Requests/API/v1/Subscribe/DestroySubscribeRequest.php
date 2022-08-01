@@ -9,8 +9,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @property mixed $id
+ * @property mixed $thread_id
+ */
 class DestroySubscribeRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *

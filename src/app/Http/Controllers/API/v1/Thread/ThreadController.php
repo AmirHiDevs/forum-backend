@@ -8,14 +8,13 @@ use App\Http\Requests\API\v1\Thread\StoreThreadRequest;
 use App\Http\Requests\API\v1\Thread\UpdateThreadRequest;
 use App\Repositories\ThreadRepository;
 use Illuminate\Http\JsonResponse;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 class ThreadController extends Controller
 {
-    private $threadRepo;
+    protected ThreadRepository $threadRepo;
 
     public function __construct(ThreadRepository $threadRepo)
     {

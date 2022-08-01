@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Interfaces\ThreadRepoInterface;
 use App\Models\Channel;
 use App\Models\Thread;
-use App\Notifications\NewReplySubmitted;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

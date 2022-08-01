@@ -6,8 +6,8 @@ use App\Models\Channel;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Response;
 use Laravel\Sanctum\Sanctum;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -74,7 +74,7 @@ class ThreadTest extends TestCase
         $thread = Thread::factory()->create([
             'title' => 'John',
             'contents' => 'Doe',
-            'channel_id' => 1,
+            'channel_id' => Channel::factory()->create()->id,
             'best_answer_id' => 2,
             'user_id' => $user->id,
         ]);
@@ -84,7 +84,7 @@ class ThreadTest extends TestCase
             'user_id' => $user->id,
             'title' => 'Foo',
             'contents' => 'Bar',
-            'channel_id' => 2,
+            'channel_id' => Channel::factory()->create()->id,
             'best_answer_id' => 4
         ])->assertSuccessful();
 

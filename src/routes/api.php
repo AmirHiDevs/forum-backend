@@ -32,32 +32,22 @@ Route::prefix('v1')->group(function () {
     });
 
     //USER ROUTES
-    Route::prefix('users')->controller(UserController::class)->group(function(){
-        Route::get('/leaderboards','leaderboard')->name('leaderboard');
+    Route::prefix('users')->controller(UserController::class)->group(function () {
+        Route::get('/leaderboards', 'leaderboard')->name('leaderboard');
     });
+
 
     //CHANNEL ROUTES
-    Route::prefix('channel')->controller(ChannelController::class)->group(function () {
-        Route::get('/all', 'getChannel')->name('channel.all');
-        Route::group(['middleware' => ['permission:Manage_Channels','auth:sanctum']], function () {
-            Route::post('/create', 'createChannel')->name('channel.create');
-            Route::put('/update', 'updateChannel')->name('channel.update');
-            Route::delete('/delete', 'deleteChannel')->name('channel.delete');
-        });
-    });
-
-
+    Route::resource('channels', ChannelController::class);
 
     //THREAD ROUTES
-    Route::resource('threads',ThreadController::class);
+    Route::resource('threads', ThreadController::class);
 
     //ANSWER ROUTES
     Route::prefix('threads')->resource('answers', AnswerController::class);
 
     //SUBSCRIBE ROUTES
     Route::prefix('threads')->resource('subscribes', SubscribeController::class);
-
-
 
 
 });

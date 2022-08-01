@@ -82,13 +82,13 @@ class AnswerTest extends TestCase
 
         $answer = Answer::factory()->create([
             'contents' => 'Foo',
-            'thread_id' => 1,
+            'thread_id' => Thread::factory()->create()->id,
             'user_id' => $user->id,
         ]);
 
         $this->putJson(route('answers.update', $answer->id), [
             'id' => $answer->id,
-            'thread_id' => 2,
+            'thread_id' => Thread::factory()->create()->id,
             'contents' => 'Bar',
         ])->assertSuccessful();
 

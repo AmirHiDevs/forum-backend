@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\Answer\DestroyAnswerRequest;
 use App\Http\Requests\API\v1\Answer\StoreAnswerRequest;
 use App\Http\Requests\API\v1\Answer\UpdateAnswerRequest;
-use App\Http\Requests\API\v1\Channel\DeleteChannelRequest;
 use App\Repositories\AnswerRepository;
 use App\Services\NotificationSendService;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AnswerController extends Controller
 {
 
-    private $answerRepo;
+    protected AnswerRepository $answerRepo;
 
     public function __construct(AnswerRepository $answerRepo)
     {

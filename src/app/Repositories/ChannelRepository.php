@@ -10,25 +10,23 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+/**
+ * @property Builder $model
+ */
 class ChannelRepository implements ChannelRepoInterface
 {
-
-    /**
-     * @var Builder
-     */
-    private $model;
 
     public function __construct()
     {
         $this->model = Channel::query();
     }
 
-    public function getAll() : Collection
+    public function index() : Collection
     {
         return $this->model->get();
     }
 
-    public function create($name) : Model
+    public function store($name) : Model
     {
        return $this->model->create([
             'name' => $name,
@@ -44,7 +42,7 @@ class ChannelRepository implements ChannelRepoInterface
         ]);
     }
 
-    public function delete($id): bool
+    public function destroy($id): bool
     {
         return $this->model->find($id)->delete();
     }

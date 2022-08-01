@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API\v1\Channel;
 
-use App\Http\Requests\API\v1\Channel\CreateChannelRequest;
-use App\Http\Requests\API\v1\Channel\DeleteChannelRequest;
+use App\Http\Requests\API\v1\Channel\StoreChannelRequest;
+use App\Http\Requests\API\v1\Channel\DestroyChannelRequest;
 use App\Http\Requests\API\v1\Channel\UpdateChannelRequest;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
@@ -13,41 +13,42 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ChannelController extends Controller
 {
-    private $channelRepo;
+    protected ChannelRepository $channelRepo;
 
     public function __construct(ChannelRepository $channelRepo)
     {
         $this->channelRepo = $channelRepo;
+        $this->middleware(['permission:Manage_Channels','auth:sanctum'])->except('index');
     }
 
 
-    public function getChannel(): JsonResponse
+    public function index(): JsonResponse
     {
-        $channels = $this->channelRepo->getAll();
+        $channels = $this->channelRepo->index();
         return response()->json($channels, Response::HTTP_OK);
     }
 
-    public function createChannel(CreateChannelRequest $request): JsonResponse
+    public function store(StoreChannelRequest $request): JsonResponse
     {
-        $this->channelRepo->create($request->name);
+        $this->channelRepo->store($request->input('name'));
 
         return response()->json([
             'message' => 'Channel is Created Successfully.'
         ], Response::HTTP_CREATED);
     }
 
-    public function updateChannel(UpdateChannelRequest $request): JsonResponse
+    public function update(UpdateChannelRequest $request): JsonResponse
     {
-        $this->channelRepo->update($request->id,$request->name);
+        $this->channelRepo->update($request->id, $request->input('name'));
 
         return response()->json([
             'message' => 'Channel is Updated Successfully.'
         ], Response::HTTP_OK);
     }
 
-    public function deleteChannel(DeleteChannelRequest $request): JsonResponse
+    public function destroy(DestroyChannelRequest $request): JsonResponse
     {
-        $this->channelRepo->delete($request->id);
+        $this->channelRepo->destroy($request->id);
 
         return response()->json([
             'message' => 'Channel is Deleted Successfully.'

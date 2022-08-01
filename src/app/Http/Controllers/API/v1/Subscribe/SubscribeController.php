@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SubscribeController extends Controller
 {
-    private $subscribeRepo;
+    protected SubscribeRepository $subscribeRepo;
 
     public function __construct(SubscribeRepository $subscribeRepo)
     {

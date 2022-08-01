@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 
 interface ChannelRepoInterface
 {
-    public function getAll(): Collection;
+    public function index(): Collection;
 
-    public function create($name): Model;
+    public function store($name): Model;
 
     public function update($id, $name): bool;
 
-    public function delete($id): bool;
+    public function destroy($id): bool;
 }

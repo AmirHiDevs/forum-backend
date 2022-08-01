@@ -7,6 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @property mixed $thread_id
+ */
 class StoreSubscribeRequest extends FormRequest
 {
    /**

@@ -5,9 +5,9 @@ namespace App\Http\Requests\API\v1\Channel;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @property mixed $name
+ * @property mixed $id
  */
-class CreateChannelRequest extends FormRequest
+class DestroyChannelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class CreateChannelRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required'
+            'id'=>'required'
         ];
     }
 }
