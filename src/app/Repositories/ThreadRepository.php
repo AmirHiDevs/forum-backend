@@ -5,8 +5,8 @@ namespace App\Repositories;
 use App\Interfaces\ThreadRepoInterface;
 use App\Models\Channel;
 use App\Models\Thread;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -21,9 +21,12 @@ class ThreadRepository implements ThreadRepoInterface
         $this->model = Thread::query();
     }
 
-    public function index(): Collection
+    public function index(): LengthAwarePaginator
     {
-        return $this->model->Where('flag', true)->latest()->get();
+        return $this->model->Where('flag', true)->with([
+            'channel:id,name,slug',
+            'user:id,name'
+        ])->latest()->paginate(10);
     }
 
 

@@ -29,8 +29,8 @@ class ThreadFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'contents'=> $this->faker->realText,
-            'user_id'=> User::factory()->create()->id,
-            'channel_id'=> Channel::factory()->create()->id,
+            'user_id'=> $this->faker->numberBetween(1, User::query()->get('id')->count()),
+            'channel_id'=> $this->faker->numberBetween(1, Channel::query()->get('id')->count()),
             'best_answer_id' => $this->faker->randomNumber(100 || null)
         ];
     }

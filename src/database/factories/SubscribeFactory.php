@@ -25,8 +25,8 @@ class SubscribeFactory extends Factory
     {
 
         return [
-            'user_id'=> User::factory()->create()->id,
-            'thread_id'=> Thread::factory()->create()->id,
+            'user_id'=> $this->faker->numberBetween(1, User::query()->get('id')->count()),
+            'thread_id'=> $this->faker->numberBetween(1, Thread::query()->get('id')->count()),
         ];
     }
 }
