@@ -24,11 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
 
     //AUTH ROUTES
-    Route::prefix('/auth')->controller(AuthController::class)->group(function () {
+    Route::prefix('/auth')->controller(AuthController::class)->group( function() {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
         Route::post('/logout', 'logout')->name('logout');
-        Route::get('/user/info', 'userInfo')->name('user.info');
+        Route::get('/user/info', 'userInfo')->middleware('auth')->name('user.info');
     });
 
     //USER ROUTES

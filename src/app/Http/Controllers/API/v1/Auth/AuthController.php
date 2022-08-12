@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
 
-       $user = $this->userRepo->create($request->name,$request->email,$request->password);
+        $user = $this->userRepo->create($request->name, $request->email, $request->password);
 
         $defaultSuperAdminEmail = config('permission.default_super_admin_email');
 
@@ -49,11 +49,11 @@ class AuthController extends Controller
 
     public function userInfo(): JsonResponse
     {
-        $data = [
-          Auth::user(),
-          'notifications' => Auth::user()->unreadNotifications()
-        ];
-        return response()->json($data, Response::HTTP_OK);
+            $data = [
+                Auth::user(),
+                'notifications' => Auth::user()->unreadNotifications(),
+            ];
+            return response()->json($data, Response::HTTP_OK);
     }
 
     public function logout(): JsonResponse
