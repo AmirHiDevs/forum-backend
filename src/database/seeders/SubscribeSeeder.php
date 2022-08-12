@@ -14,6 +14,6 @@ class SubscribeSeeder extends Seeder
      */
     public function run()
     {
-        Subscribe::factory()->count(200)->create();
+        Subscribe::factory()->count(2000)->create();
     }
 }

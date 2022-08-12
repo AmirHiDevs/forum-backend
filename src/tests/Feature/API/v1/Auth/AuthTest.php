@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Illuminate\Testing\TestResponse;
+use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use function route;
@@ -60,7 +61,8 @@ class AuthTest extends TestCase
     public function test_logged_in_user_can_see_his_info()
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->get(route('user.info'));
+        Sanctum::actingAs($user);
+        $response = $this->get(route('user.info'));
 
         $response->assertStatus(Response::HTTP_OK);
     }

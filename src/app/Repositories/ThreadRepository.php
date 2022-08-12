@@ -25,14 +25,18 @@ class ThreadRepository implements ThreadRepoInterface
     {
         return $this->model->Where('flag', true)->with([
             'channel:id,name,slug',
-            'user:id,name'
-        ])->latest()->paginate(10);
+            'user:id,name',
+        ])->withCount('answers','subscribes')->latest()->paginate(10);
     }
 
 
     public function show($slug): Model
     {
-        return $this->model->Where('slug', $slug)->Where('flag', true)->first();
+        return $this->model->Where('slug', $slug)->Where('flag', true)->with([
+            'channel:id,name,slug',
+            'user:id,name',
+            'answers'
+        ])->withCount('answers','subscribes')->first();
     }
 
     public function store($title, $contents): Model
